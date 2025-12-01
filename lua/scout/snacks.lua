@@ -24,9 +24,10 @@ function M.tmux_picker(cfg)
     end
   end
 
-  local existing_names = vim.tbl_map(function(item)
-    return item.data.name
-  end, items)
+  local existing_names_set = {}
+  for _, item in ipairs(items) do
+    existing_names_set[item.data.name] = true
+  end
 
   -- Search folders for potential new sessions
   for _, dir in ipairs(cfg.search_paths) do
@@ -37,7 +38,7 @@ function M.tmux_picker(cfg)
         local full = expanded .. "/" .. d
         if vim.fn.isdirectory(full) == 1 then
           local name = d:gsub("%.", "_")
-          if name ~= active_session and not vim.tbl_contains(existing_names, name) then
+          if name ~= active_session and not existing_names_set[name] then
             table.insert(items, {
               data = { path = full, name = name, existing = false },
               text = full,
@@ -52,7 +53,7 @@ function M.tmux_picker(cfg)
   for _, dir in ipairs(cfg.include_folders) do
     local expanded = util.expand(dir)
     local name = vim.fn.fnamemodify(expanded, ":t"):gsub("%.", "_")
-    if name ~= active_session and not vim.tbl_contains(existing_names, name) then
+    if name ~= active_session and not existing_names_set[name] then
       table.insert(items, {
         data = { path = expanded, name = name, existing = false },
         text = expanded,
@@ -61,10 +62,14 @@ function M.tmux_picker(cfg)
   end
 
   -- Exclusions
+  local exclude_set = {}
   for _, dir in ipairs(cfg.exclude_folders) do
     local expanded = util.expand(dir)
+    exclude_set[expanded] = true
+  end
+  if next(exclude_set) then
     items = vim.tbl_filter(function(item)
-      return item.data.path ~= expanded
+      return not exclude_set[item.data.path]
     end, items)
   end
 
