@@ -22,6 +22,9 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim):
 ```lua
 {
   "chriso345/scout.nvim",
+  dependencies = {
+    "folke/snacks.nvim",
+  },
   -- Default configuration
   opts = {
     search_paths = { "~/projects" },   -- Paths to scan for tmux sessions
