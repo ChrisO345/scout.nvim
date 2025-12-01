@@ -1,6 +1,9 @@
+---@class Scout.pickers.snacks
 local M = {}
 local util = require("scout.util")
 
+---@param cfg Scout.ConfigDefaults
+---@return any
 function M.tmux_picker(cfg)
   local Snacks = require("snacks")
   local activeHL = cfg.highlight_active
@@ -16,7 +19,7 @@ function M.tmux_picker(cfg)
     if name and path and name ~= active_session then
       table.insert(items, {
         data = { path = path, name = name, existing = true },
-        text = string.format("[TMUX] %s (%s)", name, path),
+        text = string.format("%s %s (%s)", cfg.active_prefix, name, path),
       })
     end
   end
@@ -72,7 +75,7 @@ function M.tmux_picker(cfg)
 
     format = function(item)
       if item.data.existing then
-        return { { "[TMUX] " .. item.data.name, activeHL } }
+        return { { cfg.active_prefix .. item.data.name, activeHL } }
       else
         return { { item.data.name, inactiveHL } }
       end

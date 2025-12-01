@@ -1,13 +1,23 @@
-local uv = vim.uv
+---@class Scout.util
 
 local M = {}
 
+---@param path string
+---@return string
 function M.expand(path)
-  return path:gsub("^~", os.getenv("HOME") or "~")
+  local expanded = path:gsub("^~", os.getenv("HOME") or "~")
+  return expanded
 end
 
+---@param args string[]
+---@return nil
 function M.run_tmux(args)
-  uv.spawn("tmux", { args = args }, function() end)
+  ---@diagnostic disable-next-line: missing-fields
+  vim.uv.spawn("tmux", {
+    args = args,
+    stdio = { 0, 1, 2 },
+  }, function() end)
 end
 
+---@return table
 return M

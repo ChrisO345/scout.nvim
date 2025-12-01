@@ -1,5 +1,8 @@
+---@class Scout
 local M = {}
 
+---@param opts table|nil
+---@return nil
 function M.setup(opts)
   opts = opts or {}
   require("scout.picker").setup(opts)
