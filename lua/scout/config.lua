@@ -12,8 +12,6 @@
 
 ---@class Scout.PreviewConfig
 ---@field cmd string
----@field title string
----@field window_title string
 
 local M = {}
 
@@ -66,10 +64,6 @@ M.defaults = {
   preview = {
     -- Command run with the selected path appended, e.g. "ls -la /path/to/dir"
     cmd = "ls -la",
-    -- Title shown in the preview pane
-    title = "Directory",
-    -- Optional window title string used by the picker layout
-    window_title = " Directory ",
   },
 }
 

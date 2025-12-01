@@ -31,11 +31,24 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim):
     include_folders = {},              -- Extra folders to include
     exclude_folders = {},              -- Folders to ignore
     picker = "snacks",                 -- Picker backend: "snacks" or "telescope"
-    layout = {},                       -- Optional custom snacks layout table
+    layout = {                         -- Default layout configuration (for snacks picker)
+      layout = {
+        box = "horizontal",
+        width = 0.8,
+        min_width = 120,
+        height = 0.8,
+        {
+          box = "vertical",
+          border = true,
+          title = " Tmux Sessions ",
+          { win = "input", height = 1,     border = "bottom" },
+          { win = "list",  border = "none" },
+        },
+        { win = "preview", title = " Directory ", border = true, width = 0.5 },
+      },
+    },
     preview = {
       cmd = "ls -la",                  -- Command to generate preview content
-      title = "Directory",             -- Preview title
-      window_title = " Directory ",    -- Preview window title
     },
     highlight_active = "SnacksPickerDirectory",
     highlight_inactive = "SnacksPickerPathHidden",
