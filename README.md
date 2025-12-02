@@ -52,7 +52,7 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim):
     },
     highlight_active = "SnacksPickerDirectory",
     highlight_inactive = "SnacksPickerPathHidden",
-  }
+  },
   keys = {
     { "<C-f>", function() require("scout.picker").tmux_picker() end, desc = "Tmux Session Picker" },
   },
